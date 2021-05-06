@@ -1,0 +1,43 @@
+{
+  "name": "ull-esit-inf-dsi-20-21-prct10-async-sockets-alu0101228020",
+  "version": "1.0.0",
+  "description": "## Práctica 10 - Cliente y servidor para una aplicación de procesamiento de notas de texto",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "coverage": "nyc npm test && nyc report --reporter=lcov",
+    "start": "tsc-watch --onSuccess \"node dist/index.js\"",
+    "doc": "typedoc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct10-async-sockets-alu0101228020.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct10-async-sockets-alu0101228020/issues"
+  },
+  "homepage": "https://github.com/ULL-ESIT-INF-DSI-2021/ull-esit-inf-dsi-20-21-prct10-async-sockets-alu0101228020#readme",
+  "devDependencies": {
+    "@types/chai": "^4.2.16",
+    "@types/chalk": "^2.2.0",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^14.14.41",
+    "@types/yargs": "^16.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "chai": "^4.3.4",
+    "chalk": "^4.1.1",
+    "eslint": "^7.24.0",
+    "eslint-config-google": "^0.14.0",
+    "mocha": "^8.3.2",
+    "nyc": "^15.1.0",
+    "ts-node": "^9.1.1",
+    "tsc-watch": "^4.2.9",
+    "typedoc": "^0.20.35",
+    "typescript": "^4.2.4",
+    "yargs": "^16.2.0"
+  }
+}
