@@ -16,9 +16,9 @@ export class Database {
     const titleTogether = note.getTitle().split(' ').join('');
 
     // If the user exists
-    if (fs.existsSync(`./database/${note.getName()}`) == true) {
+    if (fs.existsSync(`./database/${note.getName()}`) === true) {
       // If the note with the title does not exist
-      if (fs.existsSync(`./database/${note.getName()}/${titleTogether}.json`) == false) {
+      if (fs.existsSync(`./database/${note.getName()}/${titleTogether}.json`) === false) {
         // The file is added and the filled structure is passed to it
         fs.writeFileSync(`./database/${note.getName()}/${titleTogether}.json`, structure);
         return true;
@@ -50,9 +50,9 @@ export class Database {
     const titleTogether = title.split(' ').join('');
 
     // If the user exists
-    if (fs.existsSync(`./database/${name}`) == true) {
+    if (fs.existsSync(`./database/${name}`) === true) {
       // If the note with the title exists
-      if (fs.existsSync(`./database/${name}/${titleTogether}.json`) == true) {
+      if (fs.existsSync(`./database/${name}/${titleTogether}.json`) === true) {
         // The note is overwritten
         fs.writeFileSync(`./database/${name}/${titleTogether}.json`, structure);
         return true;
@@ -77,9 +77,9 @@ export class Database {
     const titleTogether = title.split(' ').join('');
 
     // If the user exists
-    if (fs.existsSync(`./database/${name}`) == true) {
+    if (fs.existsSync(`./database/${name}`) === true) {
       // If the note with the title exists
-      if (fs.existsSync(`./database/${name}/${titleTogether}.json`) == true) {
+      if (fs.existsSync(`./database/${name}/${titleTogether}.json`) === true) {
         // The file is deleted
         fs.rmSync(`./database/${name}/${titleTogether}.json`);
         return true;
@@ -100,7 +100,7 @@ export class Database {
      */
   listNotes(name: string): Notes[] {
     // If the user exists
-    if (fs.existsSync(`./database/${name}`) == true) {
+    if (fs.existsSync(`./database/${name}`) === true) {
       // Scrolls through user notes
       const arrayNotes: Notes[] = [];
       fs.readdirSync(`./database/${name}/`).forEach((note) => {
@@ -126,8 +126,8 @@ export class Database {
     // Create the filename with the title along
     const titleTogether = title.split(' ').join('');
     // If the user exists
-    if (fs.existsSync(`./database/${name}`) == true) {
-      if (fs.existsSync(`./database/${name}/${titleTogether}.json`) == true) {
+    if (fs.existsSync(`./database/${name}`) === true) {
+      if (fs.existsSync(`./database/${name}/${titleTogether}.json`) === true) {
         // The file is read and that structure is stored
         const data = fs.readFileSync(`./database/${name}/${titleTogether}.json`);
         const dataJSON = JSON.parse(data.toString());

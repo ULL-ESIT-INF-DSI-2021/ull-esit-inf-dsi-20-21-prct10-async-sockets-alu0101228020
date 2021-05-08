@@ -35,7 +35,7 @@ const server = net.createServer((connection) => {
         // The object to be added is created by the indicated client information
         const add = new Notes(request.user, request.title, request.body, request.color);
         // If successful, the success is true, otherwise false
-        if (database.addNote(add) == false) {
+        if (database.addNote(add) === false) {
           response.success = false;
         }
         break;
@@ -45,7 +45,7 @@ const server = net.createServer((connection) => {
         const modify = new Notes(request.user, request.title, request.body, request.color);
         response.type = 'modify';
         // If successful, the success is true, otherwise false
-        if (database.modifyNote(modify.getName(), modify.getTitle(), modify.getBody(), modify.getColor()) == false) {
+        if (database.modifyNote(modify.getName(), modify.getTitle(), modify.getBody(), modify.getColor()) === false) {
           response.success = false;
         }
         break;
@@ -54,7 +54,7 @@ const server = net.createServer((connection) => {
         // The object is deleted by the indicated client information
         response.type = 'remove';
         // If successful, the success is true, otherwise false
-        if (database.removeNote(request.user, request.title) == false) {
+        if (database.removeNote(request.user, request.title) === false) {
           response.success = false;
         }
         break;
@@ -64,7 +64,7 @@ const server = net.createServer((connection) => {
         response.type = 'list';
         const notesArray = database.listNotes(request.user);
         // If successful the event is true and the notes objects of the type are updated, otherwise it is false
-        if (notesArray.length == 0) {
+        if (notesArray.length === 0) {
           response.success = false;
         } else response.notes = notesArray;
         break;

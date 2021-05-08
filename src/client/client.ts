@@ -52,7 +52,7 @@ yargs.command({
     let colourNote: colours = colours.yellow;
     if (typeof argv.title === 'string' && typeof argv.body === 'string' && typeof argv.color === 'string' && typeof argv.user === 'string') {
       Object.values(colours).forEach((value) => {
-        if (argv.color == value) {
+        if (argv.color === value) {
           colourNote = value;
         }
       });
@@ -216,7 +216,7 @@ socket.on('message', (request) => {
   switch (request.type) {
     case 'add':
       // If it is true, the confirmation message is sent and if not, an error message
-      if (request.success == true) {
+      if (request.success === true) {
         console.log(chalk.green(`New note added! \nNote: If you do not choose between the colors: blue, red, green and yellow. Yellow is set by default.`));
       } else {
         console.log(chalk.red('Error: Note title taken!'));
@@ -224,7 +224,7 @@ socket.on('message', (request) => {
       break;
     case 'modify':
       // If it is true, the confirmation message is sent and if not, an error message
-      if (request.success == true) {
+      if (request.success === true) {
         console.log(chalk.green(`Modified note! \nNote: If you do not choose between the colors: blue, red, green and yellow. Yellow is set by default.`));
       } else {
         console.log(chalk.red('Error: This is because the username or title is wrong'));
@@ -232,14 +232,14 @@ socket.on('message', (request) => {
       break;
     case 'remove':
       // If it is true, the confirmation message is sent and if not, an error message
-      if (request.success == true) {
+      if (request.success === true) {
         console.log(chalk.green('Note removed!'));
       } else {
         console.log(chalk.red('Error: This is because the username or title is wrong'));
       }
       break;
     case 'list':
-      if (request.success == true) {
+      if (request.success === true) {
         // If true, all notes for the specified user are returned
         console.log(chalk.green('Your notes: ' + '\n'));
         request.notes.forEach((note: any) => {
@@ -251,7 +251,7 @@ socket.on('message', (request) => {
       break;
     case 'read':
       // If true, the note specified by the user is returned
-      if (request.success == true) {
+      if (request.success === true) {
         console.log(chalk.keyword(request.notes[0].color)('- Title: ' + request.notes[0].title));
         console.log(chalk.keyword(request.notes[0].color)('- Body: ' + request.notes[0].body + '\n'));
       } else {
@@ -262,7 +262,7 @@ socket.on('message', (request) => {
     default:
       console.log(chalk.red('Error: Invalid type registered'));
       break;
-  };
+  }
 });
 
 /**
