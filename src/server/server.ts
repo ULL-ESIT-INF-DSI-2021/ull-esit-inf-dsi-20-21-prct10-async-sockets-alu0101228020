@@ -35,9 +35,7 @@ const server = net.createServer((connection) => {
         // The object to be added is created by the indicated client information
         const add = new Notes(request.user, request.title, request.body, request.color);
         // If successful, the success is true, otherwise false
-        if (!database.addNote(add)) {
-          response.success = false;
-        }
+        if (!database.addNote(add)) response.success = false;
         break;
       // Modify note
       case 'modify':
@@ -45,18 +43,14 @@ const server = net.createServer((connection) => {
         const modify = new Notes(request.user, request.title, request.body, request.color);
         response.type = 'modify';
         // If successful, the success is true, otherwise false
-        if (!database.modifyNote(modify.getName(), modify.getTitle(), modify.getBody(), modify.getColor())) {
-          response.success = false;
-        }
+        if (!database.modifyNote(modify.getName(), modify.getTitle(), modify.getBody(), modify.getColor())) response.success = false;
         break;
       // Remove note
       case 'remove':
         // The object is deleted by the indicated client information
         response.type = 'remove';
         // If successful, the success is true, otherwise false
-        if (!database.removeNote(request.user, request.title)) {
-          response.success = false;
-        }
+        if (!database.removeNote(request.user, request.title)) response.success = false;
         break;
       // List note
       case 'list':
@@ -64,9 +58,8 @@ const server = net.createServer((connection) => {
         response.type = 'list';
         const notesArray = database.listNotes(request.user);
         // If successful the event is true and the notes objects of the type are updated, otherwise it is false
-        if (notesArray.length == 0) {
-          response.success = false;
-        } else response.notes = notesArray;
+        if (notesArray.length == 0) response.success = false;
+        else response.notes = notesArray;
         break;
       // Read note
       case 'read':
@@ -74,9 +67,8 @@ const server = net.createServer((connection) => {
         response.type = 'read';
         const read = database.readNote(request.user, request.title);
         // If successful the event is true and the notes object of the type is updated, otherwise it is false
-        if (read == null) {
-          response.success = false;
-        } else response.notes = [read];
+        if (read == null) response.success = false;
+        else response.notes = [read];
         break;
       // Default error
       default:
@@ -87,9 +79,8 @@ const server = net.createServer((connection) => {
      * A message is sent to the client, once the response is sent to the client
      */
     connection.write(JSON.stringify(response), (err: any) => {
-      if (err) {
-        console.log(chalk.red('\nError: The response could not be sent'));
-      } else {
+      if (err) console.log(chalk.red('\nError: The response could not be sent'));
+      else {
         console.log(chalk.green('\nThe response has been sent successfully'));
         connection.end();
       }

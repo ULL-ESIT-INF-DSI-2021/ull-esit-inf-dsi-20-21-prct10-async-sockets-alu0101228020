@@ -205,7 +205,7 @@ yargs.parse();
  * Print to the client console if the information has been sent successfully or not
  */
 client.write(JSON.stringify(request) + '\n', (err) => {
-  if (!err) console.log(chalk.green('Data could be sent\n'));
+  if (err) console.log(chalk.red('Data couldn\'t be sended\n'));
 });
 
 /**
@@ -216,27 +216,18 @@ socket.on('message', (request) => {
     // Add note
     case 'add':
       // If it is true, the confirmation message is sent and if not, an error message
-      if (request.success) {
-        console.log(chalk.green(`New note added! \nNote: If you do not choose between the colors: blue, red, green and yellow. Yellow is set by default.`));
-      } else {
-        console.log(chalk.red('Error: Note title taken!'));
-      }
+      if (request.success) console.log(chalk.green(`New note added! \nNote: If you do not choose between the colors: blue, red, green and yellow. Yellow is set by default.`));
+      else console.log(chalk.red('Error: Note title taken!'));
       break;
     case 'modify':
       // If it is true, the confirmation message is sent and if not, an error message
-      if (request.success) {
-        console.log(chalk.green(`Modified note! \nNote: If you do not choose between the colors: blue, red, green and yellow. Yellow is set by default.`));
-      } else {
-        console.log(chalk.red('Error: This is because the username or title is wrong'));
-      }
+      if (request.success) console.log(chalk.green(`Modified note! \nNote: If you do not choose between the colors: blue, red, green and yellow. Yellow is set by default.`));
+      else console.log(chalk.red('Error: This is because the username or title is wrong'));
       break;
     case 'remove':
       // If it is true, the confirmation message is sent and if not, an error message
-      if (request.success) {
-        console.log(chalk.green('Note removed!'));
-      } else {
-        console.log(chalk.red('Error: This is because the username or title is wrong'));
-      }
+      if (request.success) console.log(chalk.green('Note removed!'));
+      else console.log(chalk.red('Error: This is because the username or title is wrong'));
       break;
     case 'list':
       if (request.success) {
@@ -244,18 +235,14 @@ socket.on('message', (request) => {
         request.notes.forEach((note: any) => {
           console.log(chalk.keyword(note.color)('- Title: ' + note.title + '\n'));
         });
-      } else {
-        console.log(chalk.red(`Error: User not found!`));
-      }
+      } else console.log(chalk.red(`Error: User not found!`));
       break;
     case 'read':
       // If true, the note specified by the user is returned
       if (request.success) {
         console.log(chalk.keyword(request.notes[0].color)('- Title: ' + request.notes[0].title));
         console.log(chalk.keyword(request.notes[0].color)('- Body: ' + request.notes[0].body + '\n'));
-      } else {
-        console.log(chalk.red(`Error: This is because the username or title is wrong`));
-      }
+      } else console.log(chalk.red(`Error: This is because the username or title is wrong`));
       break;
     // Default error
     default:
