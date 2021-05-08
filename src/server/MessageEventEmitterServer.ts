@@ -9,7 +9,6 @@ export class MessageEventEmitterServer extends EventEmitter {
    */
   constructor(connection: EventEmitter) {
     super();
-
     /**
      * This handler tries to store in a message a complete message received in pieces from the client
      * Each message ends with the character '\ n'

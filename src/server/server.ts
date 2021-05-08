@@ -10,7 +10,6 @@ import {MessageEventEmitterServer} from './MessageEventEmitterServer';
  */
 const server = net.createServer((connection) => {
   console.log(chalk.cyanBright('\nClient connected'));
-
   const socket = new MessageEventEmitterServer(connection);
 
   /**
@@ -20,33 +19,28 @@ const server = net.createServer((connection) => {
     const request = message;
     const database = new Database();
     console.log(chalk.cyanBright('Client\'s request has been received'));
-    // Response type
     const response: ResponseType = {
       type: 'add',
       success: true,
     };
     // Command line options depending on the type
     switch (request.type) {
-      // Add note
       case 'add':
         // The object to be added is created by the indicated client information
         const add = new Notes(request.user, request.title, request.body, request.color);
         if (!database.addNote(add)) response.success = false;
         break;
-      // Modify note
       case 'modify':
         // The object to be modified is created by the indicated client information
         const modify = new Notes(request.user, request.title, request.body, request.color);
         response.type = 'modify';
         if (!database.modifyNote(modify.getName(), modify.getTitle(), modify.getBody(), modify.getColor())) response.success = false;
         break;
-      // Remove note
       case 'remove':
         // The object is deleted by the indicated client information
         response.type = 'remove';
         if (!database.removeNote(request.user, request.title)) response.success = false;
         break;
-      // List note
       case 'list':
         // The different objects of a user are listed by the indicated client information
         response.type = 'list';
@@ -54,7 +48,6 @@ const server = net.createServer((connection) => {
         if (notesArray.length == 0) response.success = false;
         else response.notes = notesArray;
         break;
-      // Read note
       case 'read':
         // An object specified is read by the indicated client information
         response.type = 'read';
@@ -66,9 +59,7 @@ const server = net.createServer((connection) => {
         console.log(chalk.red('Error: Invalid type registered'));
         break;
     }
-    /**
-     * A message is sent to the client, once the response is sent to the client
-     */
+    // A message is sent to the client, once the response is sent to the client
     connection.write(JSON.stringify(response), (err: any) => {
       if (err) console.log(chalk.red('\nError: The response could not be sent'));
       else {
@@ -78,11 +69,8 @@ const server = net.createServer((connection) => {
     });
   });
 });
-
-/**
- * The server will be listening to the specified port,
- * which is the port where the clients will have to connect in order to use the service
- */
+// The server will be listening to the specified port,
+// which is the port where the clients will have to connect in order to use the service
 server.listen(60300, () => {
   console.log(chalk.cyanBright('Waiting for clients to connect...'));
 });

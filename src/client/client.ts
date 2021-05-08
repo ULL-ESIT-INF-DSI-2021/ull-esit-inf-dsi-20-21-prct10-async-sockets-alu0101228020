@@ -4,13 +4,11 @@ import * as yargs from 'yargs';
 import * as chalk from 'chalk';
 import {colours} from '../notes/notes';
 import {MessageEventEmitterClient} from './MessageEventEmitterClient';
-
 /**
  * Port connected by the client, which matches the port listened to by the server
  */
 const client = net.connect({port: 60300});
 const socket = new MessageEventEmitterClient(client);
-
 /**
  * Type of request
  */
@@ -18,7 +16,6 @@ let request: RequestType = {
   type: 'add',
   user: '',
 };
-
 /**
  * Execution of the add function through this command
  */
@@ -66,7 +63,6 @@ yargs.command({
     }
   },
 });
-
 /**
  * Execution of the modify function through this command
  */
@@ -114,7 +110,6 @@ yargs.command({
     }
   },
 });
-
 /**
  * Execution of the remove function through this command
  */
@@ -143,7 +138,6 @@ yargs.command({
     }
   },
 });
-
 /**
  * Execution of the list function through this command
  */
@@ -166,7 +160,6 @@ yargs.command({
     }
   },
 });
-
 /**
  * Execution of the read function through this command
  */
@@ -195,19 +188,16 @@ yargs.command({
     }
   },
 });
-
 /**
  * Process arguments passed from command line to application
  */
 yargs.parse();
-
 /**
  * Print to the client console if the information has been sent successfully or not
  */
 client.write(JSON.stringify(request) + '\n', (err) => {
   if (err) console.log(chalk.red('Data couldn\'t be sended\n'));
 });
-
 /**
  * The event 'message' is executed that prints the response of the action performed in the client console
  */
@@ -248,9 +238,7 @@ socket.on('message', (request) => {
       break;
   }
 });
-/**
- * Connection error information
- */
+// Connection error information
 client.on('error', (err) => {
   console.log(chalk.red(`Error: Connection could not be established: ${err.message}`));
 });

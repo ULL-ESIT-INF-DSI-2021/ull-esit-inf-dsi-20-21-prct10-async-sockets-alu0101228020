@@ -1,6 +1,5 @@
 import * as fs from 'fs';
 import {Notes, colours} from './notes';
-
 export class Database {
   constructor() {
   }
@@ -12,29 +11,22 @@ export class Database {
   addNote(note: Notes): boolean {
     // Structure of the JSON of each user
     const structure = `{ "title": "${note.getTitle()}", "body": "${note.getBody()}" , "color": "${note.getColor()}" }`;
-
-    // Create the filename with the title along
     const titleTogether = note.getTitle().split(' ').join('');
-
-    // If the user exists
     if (fs.existsSync(`./database/${note.getName()}`)) {
       // If the note with the title does not exist
       if (!fs.existsSync(`./database/${note.getName()}/${titleTogether}.json`)) {
         // The file is added and the filled structure is passed to it
         fs.writeFileSync(`./database/${note.getName()}/${titleTogether}.json`, structure);
         return true;
-        // If the note with that title already made, shows the error message
       } else {
         return false;
       }
-      // If the user does not exist, the folder is created and populated
     } else {
       fs.mkdirSync(`./database/${note.getName()}`, {recursive: true});
       fs.writeFileSync(`./database/${note.getName()}/${titleTogether}.json`, structure);
       return true;
     }
   }
-
   /**
      * Public method that allows modifying a note with a JSON structure of a specific user
      * @param name Username
@@ -46,11 +38,7 @@ export class Database {
   modifyNote(name: string, title: string, body: string, color: colours): boolean {
     // Structure of the JSON of each user
     const structure = `{ "title": "${title}", "body": "${body}" , "color": "${color}" }`;
-
-    // Create the filename with the title along
     const titleTogether = title.split(' ').join('');
-
-    // If the user exists
     if (fs.existsSync(`./database/${name}`)) {
       // If the note with the title exists
       if (fs.existsSync(`./database/${name}/${titleTogether}.json`)) {
@@ -65,7 +53,6 @@ export class Database {
       return false;
     }
   }
-
   /**
      * Public method that allows to delete a note from a specific user through the title
      * @param name Username
@@ -75,8 +62,6 @@ export class Database {
   removeNote(name: string, title: string): boolean {
     // Create the filename with the title along
     const titleTogether = title.split(' ').join('');
-
-    // If the user exists
     if (fs.existsSync(`./database/${name}`)) {
       // If the note with the title exists
       if (fs.existsSync(`./database/${name}/${titleTogether}.json`)) {
@@ -91,14 +76,12 @@ export class Database {
       return false;
     }
   }
-
   /**
      * Public method that allows to list all the notes of a specific user with the corresponding titles
      * @param name Username
      * @returns Notes object arrays
      */
   listNotes(name: string): Notes[] {
-    // If the user exists
     if (fs.existsSync(`./database/${name}`)) {
       // Scrolls through user notes
       const arrayNotes: Notes[] = [];
@@ -113,7 +96,6 @@ export class Database {
       return [];
     }
   }
-
   /**
      * Public method that allows printing a specific note of a specific user
      * @param name Username
@@ -121,7 +103,6 @@ export class Database {
      * @returns If the action has been performed, it returns the notes object and if not, it returns null
      */
   readNote(name: string, title: string): null | Notes {
-    // Create the filename with the title along
     const titleTogether = title.split(' ').join('');
     if (fs.existsSync(`./database/${name}`)) {
       if (fs.existsSync(`./database/${name}/${titleTogether}.json`)) {

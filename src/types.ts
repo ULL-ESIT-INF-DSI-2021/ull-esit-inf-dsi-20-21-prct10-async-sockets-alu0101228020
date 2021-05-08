@@ -1,5 +1,4 @@
 import {Notes} from './notes/notes';
-
 /**
  * Type of request
  */
@@ -10,7 +9,6 @@ export type RequestType = {
     body?: string;
     color?: string;
   }
-
 /**
   * Type of response
   */

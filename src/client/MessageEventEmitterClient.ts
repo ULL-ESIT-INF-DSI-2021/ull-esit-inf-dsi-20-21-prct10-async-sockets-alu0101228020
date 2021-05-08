@@ -9,7 +9,6 @@ export class MessageEventEmitterClient extends EventEmitter {
    */
   constructor(connection: EventEmitter) {
     super();
-
     /**
      * A complete message received in pieces from the server is stored in data
      */
@@ -17,7 +16,6 @@ export class MessageEventEmitterClient extends EventEmitter {
     connection.on('data', (dataChunk) => {
       data += dataChunk;
     });
-
     /**
      * The MessageEventEmitterClient object emits an event of type message
      */
