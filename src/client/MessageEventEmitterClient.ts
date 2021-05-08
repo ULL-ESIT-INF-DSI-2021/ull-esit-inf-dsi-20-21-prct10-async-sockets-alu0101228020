@@ -1,5 +1,4 @@
 import {EventEmitter} from 'events';
-
 /**
  * Client Message EventEmitter class
  */

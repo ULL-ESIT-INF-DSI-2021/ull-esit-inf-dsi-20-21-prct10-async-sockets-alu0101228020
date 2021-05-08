@@ -213,7 +213,6 @@ client.write(JSON.stringify(request) + '\n', (err) => {
  */
 socket.on('message', (request) => {
   switch (request.type) {
-    // Add note
     case 'add':
       // If it is true, the confirmation message is sent and if not, an error message
       if (request.success) console.log(chalk.green(`New note added! \nNote: If you do not choose between the colors: blue, red, green and yellow. Yellow is set by default.`));
@@ -244,13 +243,11 @@ socket.on('message', (request) => {
         console.log(chalk.keyword(request.notes[0].color)('- Body: ' + request.notes[0].body + '\n'));
       } else console.log(chalk.red(`Error: This is because the username or title is wrong`));
       break;
-    // Default error
     default:
       console.log(chalk.red('Error: Invalid type registered'));
       break;
   }
 });
-
 /**
  * Connection error information
  */

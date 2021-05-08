@@ -61,7 +61,6 @@ export class Database {
       } else {
         return false;
       }
-      // If the user does not exist, shows the error message
     } else {
       return false;
     }
@@ -88,7 +87,6 @@ export class Database {
       } else {
         return false;
       }
-      // If the user does not exist, shows the error message
     } else {
       return false;
     }
@@ -111,7 +109,6 @@ export class Database {
         arrayNotes.push(new Notes(name, dataJSON.title, dataJSON.body, dataJSON.color));
       });
       return arrayNotes;
-      // If the user does not exist, shows the error message
     } else {
       return [];
     }
@@ -126,7 +123,6 @@ export class Database {
   readNote(name: string, title: string): null | Notes {
     // Create the filename with the title along
     const titleTogether = title.split(' ').join('');
-    // If the user exists
     if (fs.existsSync(`./database/${name}`)) {
       if (fs.existsSync(`./database/${name}/${titleTogether}.json`)) {
         // The file is read and that structure is stored
@@ -137,7 +133,6 @@ export class Database {
       } else {
         return null;
       }
-      // If the user does not exist, shows the error message
     } else {
       return null;
     }

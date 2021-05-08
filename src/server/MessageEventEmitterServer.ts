@@ -1,5 +1,4 @@
 import {EventEmitter} from 'events';
-
 /**
  * Server Message EventEmitter class
  */
