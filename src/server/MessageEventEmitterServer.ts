@@ -1,4 +1,5 @@
 import {EventEmitter} from 'events';
+
 /**
  * Server Message EventEmitter class
  */
@@ -9,8 +10,10 @@ export class MessageEventEmitterServer extends EventEmitter {
    */
   constructor(connection: EventEmitter) {
     super();
+
     /**
      * This handler tries to store in a message a complete message received in pieces from the client
+     * Each message ends with the character '\ n'
      */
     let data = '';
     connection.on('data', (dataChunk) => {

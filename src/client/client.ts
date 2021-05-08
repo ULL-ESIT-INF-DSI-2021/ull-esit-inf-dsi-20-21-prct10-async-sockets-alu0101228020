@@ -4,16 +4,24 @@ import * as yargs from 'yargs';
 import * as chalk from 'chalk';
 import {colours} from '../notes/notes';
 import {MessageEventEmitterClient} from './MessageEventEmitterClient';
-// Port connected by the client, which matches the port listened to by the server
+
+/**
+ * Port connected by the client, which matches the port listened to by the server
+ */
 const client = net.connect({port: 60300});
 const socket = new MessageEventEmitterClient(client);
 
-// Type of request
+/**
+ * Type of request
+ */
 let request: RequestType = {
   type: 'add',
   user: '',
 };
-// Execution of the add function through this command
+
+/**
+ * Execution of the add function through this command
+ */
 yargs.command({
   command: 'add',
   describe: 'Add a new note',
@@ -42,8 +50,7 @@ yargs.command({
   handler(argv) {
     // If the user does not choose between the colors: red, green, blue and yellow. Yellow is set by default
     let colourNote: colours = colours.yellow;
-    if (typeof argv.title === 'string' && typeof argv.body === 'string' && 
-    typeof argv.color === 'string' && typeof argv.user === 'string') {
+    if (typeof argv.title === 'string' && typeof argv.body === 'string' && typeof argv.color === 'string' && typeof argv.user === 'string') {
       Object.values(colours).forEach((value) => {
         if (argv.color == value) {
           colourNote = value;
@@ -59,7 +66,10 @@ yargs.command({
     }
   },
 });
-// Execution of the modify function through this command
+
+/**
+ * Execution of the modify function through this command
+ */
 yargs.command({
   command: 'modify',
   describe: 'Modify a note',
@@ -87,13 +97,11 @@ yargs.command({
   },
   handler(argv) {
     // If the user does not choose between the colors: red, green, blue and yellow. Yellow is set by default
-    if (typeof argv.user === 'string' && typeof argv.title === 'string' &&
-    typeof argv.body === 'string' && typeof argv.color === 'string') {
+    if (typeof argv.title === 'string' && typeof argv.user === 'string' && typeof argv.body === 'string' && typeof argv.color === 'string') {
       let colour: colours = colours.yellow;
-
-      Object.values(colours).forEach((valueColor) => {
-        if (argv.color == valueColor) {
-          colour = valueColor;
+      Object.values(colours).forEach((value) => {
+        if (argv.color == value) {
+          colour = value;
         }
       });
       request = {
@@ -106,7 +114,10 @@ yargs.command({
     }
   },
 });
-// Execution of the remove function through this command
+
+/**
+ * Execution of the remove function through this command
+ */
 yargs.command({
   command: 'remove',
   describe: 'Remove a note',
@@ -123,7 +134,7 @@ yargs.command({
     },
   },
   handler(argv) {
-    if (typeof argv.title === 'string' && typeof argv.user === 'string') {
+    if (typeof argv.user === 'string' && typeof argv.title === 'string') {
       request = {
         type: 'remove',
         user: argv.user,
@@ -132,7 +143,10 @@ yargs.command({
     }
   },
 });
-// Execution of the list function through this command
+
+/**
+ * Execution of the list function through this command
+ */
 yargs.command({
   command: 'list',
   describe: 'List all the notes',
@@ -152,7 +166,10 @@ yargs.command({
     }
   },
 });
-// Execution of the read function through this command
+
+/**
+ * Execution of the read function through this command
+ */
 yargs.command({
   command: 'read',
   describe: 'Read a note',
@@ -169,7 +186,7 @@ yargs.command({
     },
   },
   handler(argv) {
-    if (typeof argv.user === 'string' && typeof argv.title === 'string') {
+    if (typeof argv.title === 'string' && typeof argv.user === 'string') {
       request = {
         type: 'read',
         user: argv.user,
@@ -178,51 +195,79 @@ yargs.command({
     }
   },
 });
-// Process arguments passed from command line to application
+
+/**
+ * Process arguments passed from command line to application
+ */
 yargs.parse();
-// Print to the client console if the information has been sent successfully or not
+
+/**
+ * Print to the client console if the information has been sent successfully or not
+ */
 client.write(JSON.stringify(request) + '\n', (err) => {
   if (err) console.log(chalk.red('Data couldn\'t be sended\n'));
+  else console.log(chalk.green('Data could be sent\n'));
 });
-// The event 'message' is executed that prints the response of the action performed in the client console
+
+/**
+ * The event 'message' is executed that prints the response of the action performed in the client console
+ */
 socket.on('message', (request) => {
   switch (request.type) {
     case 'add':
       // If it is true, the confirmation message is sent and if not, an error message
-      if (request.success) console.log(chalk.green(`New note added! \nNote: If you do not choose between the colors: blue, red, green and yellow. Yellow is set by default.`));
-      else console.log(chalk.red('Error: Note title taken!'));
+      if (request.success == true) {
+        console.log(chalk.green(`New note added! \nNote: If you do not choose between the colors: blue, red, green and yellow. Yellow is set by default.`));
+      } else {
+        console.log(chalk.red('Error: Note title taken!'));
+      }
       break;
     case 'modify':
       // If it is true, the confirmation message is sent and if not, an error message
-      if (request.success) console.log(chalk.green(`Modified note! \nNote: If you do not choose between the colors: blue, red, green and yellow. Yellow is set by default.`));
-      else console.log(chalk.red('Error: This is because the username or title is wrong'));
+      if (request.success == true) {
+        console.log(chalk.green(`Modified note! \nNote: If you do not choose between the colors: blue, red, green and yellow. Yellow is set by default.`));
+      } else {
+        console.log(chalk.red('Error: This is because the username or title is wrong'));
+      }
       break;
     case 'remove':
       // If it is true, the confirmation message is sent and if not, an error message
-      if (request.success) console.log(chalk.green('Note removed!'));
-      else console.log(chalk.red('Error: This is because the username or title is wrong'));
+      if (request.success == true) {
+        console.log(chalk.green('Note removed!'));
+      } else {
+        console.log(chalk.red('Error: This is because the username or title is wrong'));
+      }
       break;
     case 'list':
-      if (request.success) {
+      if (request.success == true) {
         // If true, all notes for the specified user are returned
+        console.log(chalk.green('Your notes: ' + '\n'));
         request.notes.forEach((note: any) => {
           console.log(chalk.keyword(note.color)('- Title: ' + note.title + '\n'));
         });
-      } else console.log(chalk.red(`Error: User not found!`));
+      } else {
+        console.log(chalk.red(`Error: User not found!`));
+      }
       break;
     case 'read':
       // If true, the note specified by the user is returned
-      if (request.success) {
+      if (request.success == true) {
         console.log(chalk.keyword(request.notes[0].color)('- Title: ' + request.notes[0].title));
         console.log(chalk.keyword(request.notes[0].color)('- Body: ' + request.notes[0].body + '\n'));
-      } else console.log(chalk.red(`Error: This is because the username or title is wrong`));
+      } else {
+        console.log(chalk.red(`Error: This is because the username or title is wrong`));
+      }
       break;
+    // Default error
     default:
       console.log(chalk.red('Error: Invalid type registered'));
       break;
-  }
+  };
 });
-// Connection error information
+
+/**
+ * Connection error information
+ */
 client.on('error', (err) => {
   console.log(chalk.red(`Error: Connection could not be established: ${err.message}`));
 });
