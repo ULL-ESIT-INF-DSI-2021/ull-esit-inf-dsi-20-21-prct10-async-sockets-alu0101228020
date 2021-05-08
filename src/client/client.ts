@@ -42,7 +42,8 @@ yargs.command({
   handler(argv) {
     // If the user does not choose between the colors: red, green, blue and yellow. Yellow is set by default
     let colourNote: colours = colours.yellow;
-    if (typeof argv.title === 'string' && typeof argv.body === 'string' && typeof argv.color === 'string' && typeof argv.user === 'string') {
+    if (typeof argv.title === 'string' && typeof argv.body === 'string' && 
+    typeof argv.color === 'string' && typeof argv.user === 'string') {
       Object.values(colours).forEach((value) => {
         if (argv.color == value) {
           colourNote = value;
@@ -86,8 +87,10 @@ yargs.command({
   },
   handler(argv) {
     // If the user does not choose between the colors: red, green, blue and yellow. Yellow is set by default
-    if (typeof argv.user === 'string' && typeof argv.title === 'string' && typeof argv.body === 'string' && typeof argv.color === 'string') {
+    if (typeof argv.user === 'string' && typeof argv.title === 'string' &&
+    typeof argv.body === 'string' && typeof argv.color === 'string') {
       let colour: colours = colours.yellow;
+
       Object.values(colours).forEach((valueColor) => {
         if (argv.color == valueColor) {
           colour = valueColor;

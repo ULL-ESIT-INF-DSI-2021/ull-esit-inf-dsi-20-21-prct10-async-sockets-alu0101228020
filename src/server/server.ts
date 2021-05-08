@@ -18,7 +18,6 @@ const server = net.createServer((connection) => {
   socket.on('request', (message) => {
     const request = message;
     const database = new Database();
-    console.log(chalk.cyanBright('Client\'s request has been received'));
     const response: ResponseType = {
       type: 'add',
       success: true,
