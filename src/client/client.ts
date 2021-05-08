@@ -32,17 +32,17 @@ yargs.command({
       type: 'string',
     },
     title: {
-      describe: 'Note title',
+      describe: 'Note title to add',
       demandOption: true,
       type: 'string',
     },
     body: {
-      describe: 'Note Body',
+      describe: 'Note Body to add',
       demandOption: true,
       type: 'string',
     },
     color: {
-      describe: 'Note Color. If the color is none of these: red, green, blue and yellow; Yelow is set by default',
+      describe: 'Note Color to add. If the color is none of these: red, green, blue and yellow; Yelow is set by default',
       demandOption: true,
       type: 'string',
     },
@@ -80,17 +80,17 @@ yargs.command({
       type: 'string',
     },
     title: {
-      describe: 'Note title',
+      describe: 'Note title to modify',
       demandOption: true,
       type: 'string',
     },
     body: {
-      describe: 'Note Body',
+      describe: 'Note Body to modify',
       demandOption: true,
       type: 'string',
     },
     color: {
-      describe: 'Note Color. If the color is none of these: red, green, blue and yellow; Yellow is set by default',
+      describe: 'Note Color to modify. If the color is none of these: red, green, blue and yellow; Yellow is set by default',
       demandOption: true,
       type: 'string',
     },
@@ -98,10 +98,10 @@ yargs.command({
   handler(argv) {
     // If the user does not choose between the colors: red, green, blue and yellow. Yellow is set by default
     if (typeof argv.user === 'string' && typeof argv.title === 'string' && typeof argv.body === 'string' && typeof argv.color === 'string') {
-      let colourNote: colours = colours.yellow;
-      Object.values(colours).forEach((value) => {
-        if (argv.color == value) {
-          colourNote = value;
+      let colour: colours = colours.yellow;
+      Object.values(colours).forEach((valueColor) => {
+        if (argv.color == valueColor) {
+          colour = valueColor;
         }
       });
       request = {
@@ -109,7 +109,7 @@ yargs.command({
         user: argv.user,
         title: argv.title,
         body: argv.body,
-        color: colourNote,
+        color: colour,
       };
     }
   },
@@ -128,13 +128,13 @@ yargs.command({
       type: 'string',
     },
     title: {
-      describe: 'Note title',
+      describe: 'Note title to remove',
       demandOption: true,
       type: 'string',
     },
   },
   handler(argv) {
-    if (typeof argv.user === 'string' && typeof argv.title === 'string') {
+    if (typeof argv.title === 'string' && typeof argv.user === 'string') {
       request = {
         type: 'remove',
         user: argv.user,
@@ -180,7 +180,7 @@ yargs.command({
       type: 'string',
     },
     title: {
-      describe: 'Note title',
+      describe: 'Note title to read',
       demandOption: true,
       type: 'string',
     },
