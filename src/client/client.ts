@@ -205,8 +205,7 @@ yargs.parse();
  * Print to the client console if the information has been sent successfully or not
  */
 client.write(JSON.stringify(request) + '\n', (err) => {
-  if (err) console.log(chalk.red('Data couldn\'t be sended\n'));
-  else console.log(chalk.green('Data could be sent\n'));
+  if (!err) console.log(chalk.green('Data could be sent\n'));
 });
 
 /**

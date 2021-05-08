@@ -95,9 +95,6 @@ const server = net.createServer((connection) => {
       }
     });
   });
-  connection.on('close', () => {
-    console.log(chalk.cyanBright('\nA client has disconnected'));
-  });
 });
 
 /**
