@@ -1008,3 +1008,18 @@ Estos test son prácticamente iguales y como puede observarse, lo primero que ha
 Además, también definimos un objeto **MessageEventEmitterClient** o **MessageEventEmitterServer** apuntado por client o server respectivamente, cuyo constructor recibe como argumento al objeto EventEmitter apuntado por socket. A continuación, registramos un manejador para el evento **message** o **request**, respectivamente, de nuestro objeto.
 
 Y finalmente, se emiten cuatro eventos de tipo data, cada uno de ellos con un trozo del mensaje. En el server, el último evento `\n` se debe indicar para que se vea donde termina el mensaje y en el client, el último evento es `end`, haciendo la invocación al objeto que emite dicho evento.
+
+### 6. Conclusiones
+
+En conclusión, podemos destacar el gran uso de **sockets** familiarizándonos con el **módulo net de Node.js** al igual que la **clase EventEmitter del módulo Events de Node.js**. Es cierto que fue dificultoso y aparatoso el entendimiento en el inicio pero el mecanismo es bastante similar a anteriores prácticas de sockets de otras asignaturas, por lo tanto, se completó de manera satisfactoria los requisitos y objetos de la práctica, así como los consejos de implementación para esta práctica.
+
+Finalmente, cabe decir que la funcionalidad de estos sockets entre servidor-cliente, nos permite acercarnos más al mundo real y a los protocolos de comunicaciones permitiendo enviar mensajes y transferir información de un lado a otro.
+
+### 7. Bibliografía
+
+* [Guión práctica 10](https://ull-esit-inf-dsi-2021.github.io/prct10-async-sockets/)
+* [Apuntes de sockets de la asignatura](https://ull-esit-inf-dsi-2021.github.io/nodejs-theory/nodejs-sockets.html)
+* [Documentación del paquete yargs](https://www.npmjs.com/package/yargs)
+* [Documentación del paquete chalk](https://www.npmjs.com/package/chalk)
+* [Módulo net de Node.js](https://nodejs.org/dist/latest-v16.x/docs/api/net.html)
+* [Clase EventEmitter del módulo Events de Node.js](https://nodejs.org/dist/latest-v16.x/docs/api/events.html#events_class_eventemitter)
