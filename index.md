@@ -832,3 +832,179 @@ Finalmente, cabe destacar que tenemos el `client.on()` que transmite un evento `
 
 Cabe destacar que en todos los ficheros, hacemos uso del **chalk**, donde permite colorear un mensaje ya sea indicado por el color de una nota dependiendo de la acción solicitada por el usuario o los mensajes de confirmación en verde y los mensajes de error transmitidos en rojo.
 
+### 5. Tests
+
+A continuación, destacamos el porcentaje exitoso del cubrimiento de código en los siguientes test realizados sobre los ficheros anteriormente hablados.
+
+**Test clase Notes**
+
+```ts
+import 'mocha';
+import {expect} from 'chai';
+import * as fs from 'fs';
+import {Notes, colours} from '../src/notes/notes';
+
+describe('Ejercicio - Implementación de un cliente y un servidor de la aplicación de procesamiento de notas mediante Sockets en Node.js', () => {
+  const notes = new Notes('Test', 'Prueba test', 'Probando test', colours.blue);
+
+  describe('Notes class test', () => {
+    it('It is a notes object', () => {
+      expect(notes).not.to.be.equal(null);
+    });
+
+    it('notes.getName() returns Test', () => {
+      expect(notes.getName()).to.be.equal('Test');
+    });
+
+    it('notes.getTitle() returns Prueba test', () => {
+      expect(notes.getTitle()).to.be.equal('Prueba test');
+    });
+
+    it('notes.getBody() returns Probando test', () => {
+      expect(notes.getBody()).to.be.equal('Probando test');
+    });
+
+    it('notes.getColor() returns blue', () => {
+      expect(notes.getColor()).to.be.equal(colours.blue);
+    });
+  });
+});
+```
+
+**Test clase Database**
+
+```ts
+import 'mocha';
+import {expect} from 'chai';
+import * as fs from 'fs';
+import {Notes, colours} from '../src/notes/notes';
+import {Database} from '../src/notes/database';
+
+const database = new Database();
+
+describe('Database class test', () => {
+  it('It is a database object', () => {
+    expect(database).not.to.be.equal(null);
+  });
+
+  describe('database.addNote() test', () => {
+    it('notes.addNote() returns true', () => {
+      expect(database.addNote(new Notes('Test', 'Prueba test', 'Probando test añadido', colours.blue))).to.be.equal(true);
+    });
+    it('notes.addNote() returns true', () => {
+      expect(database.addNote(new Notes('Test', 'Prueba test 2', 'Probando test 2 añadido', colours.yellow))).to.be.equal(true);
+    });
+    it('notes.addNote() with fail returns false', () => {
+      expect(database.addNote(new Notes('Test', 'Prueba test 2', 'Probando test 2 añadido', colours.yellow))).to.be.equal(false);
+    });
+  });
+
+  describe('database.modifyNote() test', () => {
+    it('notes.modifyNote() returns true', () => {
+      expect(database.modifyNote('Test', 'Prueba test', 'Probando test modificado', colours.blue)).to.be.equal(true);
+    });
+    it('notes.modifyNote() with fail returns false', () => {
+      expect(database.modifyNote('Test fail', 'Prueba test fail', 'Probando test modificado fail', colours.blue)).to.be.equal(false);
+    });
+    it('notes.modifyNote() with fail returns false', () => {
+      expect(database.modifyNote('Test', 'Prueba test fail', 'Probando test modificado fail', colours.blue)).to.be.equal(false);
+    });
+  });
+
+  describe('database.removeNote() test', () => {
+    it('notes.removeNote() returns true', () => {
+      expect(database.removeNote('Test', 'Prueba test')).to.be.equal(true);
+    });
+    it('notes.removeNote() with fail returns false', () => {
+      expect(database.removeNote('Test fail', 'Prueba test fail')).to.be.equal(false);
+    });
+    it('notes.removeNote() with fail returns false', () => {
+      expect(database.removeNote('Test', 'Prueba test fail')).to.be.equal(false);
+    });
+  });
+
+  describe('database.listNotes() class test', () => {
+    const notesTest = new Notes('Test', 'Prueba test 2', 'Probando test 2 añadido', colours.yellow);
+    it('notes.listNotes() returns [notesTest]', () => {
+      expect(database.listNotes('Test')).to.be.eql([notesTest]);
+    });
+    it('notes.listNotes() with fail returns []', () => {
+      expect(database.listNotes('Test fail')).to.be.eql([]);
+    });
+  });
+
+  describe('database.readNote() class test', () => {
+    const notesTest = new Notes('Test', 'Prueba test 2', 'Probando test 2 añadido', colours.yellow);
+    it('notes.readNote() returns notesTest', () => {
+      expect(database.readNote('Test', 'Prueba test 2')).to.be.eql(notesTest);
+    });
+    it('notes.readNote() with fail returns null', () => {
+      expect(database.readNote('Test', 'Prueba test fail')).to.be.equal(null);
+    });
+    it('notes.readNote() with fail returns null', () => {
+      expect(database.readNote('Test fail', 'Prueba test fail')).to.be.equal(null);
+    });
+  });
+});
+
+fs.rmdirSync('./database', {recursive: true});
+```
+Aquí tenemos los test sobre **Notes**, que prueban los getters correspondientes de los atributos privados y luego los test sobre **Database**, que ya los habíamos realizado en la práctica 8, que prueban cada una de las acciones solicitadas por el usuario de manera manual.
+
+**Test clase MessageEventEmitterServer**
+
+```ts
+import 'mocha';
+import {expect} from 'chai';
+import {EventEmitter} from 'events';
+import {MessageEventEmitterServer} from '../src/server/messageEventEmitterServer';
+
+describe('MessageEventEmitterServer', () => {
+  it('Should emit a message event once it gets a complete message', (done) => {
+    const socket = new EventEmitter();
+    const server = new MessageEventEmitterServer(socket);
+
+    server.on('request', (message) => {
+      expect(message).to.be.eql({'title': 'Red note', 'body': 'This is a red note', 'color': 'red'});
+      done();
+    });
+
+    socket.emit('data', '{"title": "Red note",');
+    socket.emit('data', '"body": "This is a red note",');
+    socket.emit('data', '"color": "red"}');
+    socket.emit('data', '\n');
+  });
+});
+```
+
+**Test clase MessageEventEmitterClient**
+
+```ts
+import 'mocha';
+import {expect} from 'chai';
+import {EventEmitter} from 'events';
+import {MessageEventEmitterClient} from '../src/client/messageEventEmitterClient';
+
+describe('MessageEventEmitterClient', () => {
+  it('Should emit a message event once it gets a complete message', (done) => {
+    const socket = new EventEmitter();
+    const client = new MessageEventEmitterClient(socket);
+
+    client.on('message', (message) => {
+      expect(message).to.be.eql({'title': 'Red note', 'body': 'This is a red note', 'color': 'red'});
+      done();
+    });
+
+    socket.emit('data', '{"title": "Red note",');
+    socket.emit('data', '"body": "This is a red note",');
+    socket.emit('data', '"color": "red"}');
+    socket.emit('end');
+  });
+});
+```
+
+Estos test son prácticamente iguales y como puede observarse, lo primero que hacemos dentro de la prueba es declarar un objeto **EventEmitter** apuntado por socket, que utilizaremos para emular el socket por el cual el servidor o cliente envía mensajes, posiblemente, en trozos, gracias a la emisión de diferentes eventos de tipo data. 
+
+Además, también definimos un objeto **MessageEventEmitterClient** o **MessageEventEmitterServer** apuntado por client o server respectivamente, cuyo constructor recibe como argumento al objeto EventEmitter apuntado por socket. A continuación, registramos un manejador para el evento **message** o **request**, respectivamente, de nuestro objeto.
+
+Y finalmente, se emiten cuatro eventos de tipo data, cada uno de ellos con un trozo del mensaje. En el server, el último evento `\n` se debe indicar para que se vea donde termina el mensaje y en el client, el último evento es `end`, haciendo la invocación al objeto que emite dicho evento.
