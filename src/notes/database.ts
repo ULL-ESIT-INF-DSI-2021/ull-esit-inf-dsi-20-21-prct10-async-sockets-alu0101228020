@@ -18,9 +18,7 @@ export class Database {
         // The file is added and the filled structure is passed to it
         fs.writeFileSync(`./database/${note.getName()}/${titleTogether}.json`, structure);
         return true;
-      } else {
-        return false;
-      }
+      } else return false;
     } else {
       fs.mkdirSync(`./database/${note.getName()}`, {recursive: true});
       fs.writeFileSync(`./database/${note.getName()}/${titleTogether}.json`, structure);
@@ -46,12 +44,8 @@ export class Database {
         fs.writeFileSync(`./database/${name}/${titleTogether}.json`, structure);
         return true;
         // If the note with that title does not exist, shows the error message
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
+      } else return false;
+    } else return false;
   }
   /**
      * Public method that allows to delete a note from a specific user through the title
@@ -69,12 +63,8 @@ export class Database {
         fs.rmSync(`./database/${name}/${titleTogether}.json`);
         return true;
         // If the note with that title does not exist, shows the error message
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
+      } else return false;
+    } else return false;
   }
   /**
      * Public method that allows to list all the notes of a specific user with the corresponding titles
@@ -92,9 +82,7 @@ export class Database {
         arrayNotes.push(new Notes(name, dataJSON.title, dataJSON.body, dataJSON.color));
       });
       return arrayNotes;
-    } else {
-      return [];
-    }
+    } else return [];
   }
   /**
      * Public method that allows printing a specific note of a specific user
@@ -111,11 +99,7 @@ export class Database {
         const dataJSON = JSON.parse(data.toString());
         return new Notes(name, dataJSON.title, dataJSON.body, dataJSON.color);
         // If the note with that title does not exist, shows the error message
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
+      } else return null;
+    } else return null;
   }
 }
