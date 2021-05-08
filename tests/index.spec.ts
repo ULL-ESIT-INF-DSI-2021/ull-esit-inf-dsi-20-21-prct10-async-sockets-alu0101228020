@@ -15,3 +15,4 @@ describe('add function tests', () => {
     expect(add(1.2, 3.5)).to.be.equal(4.7);
   });
 });
+
