@@ -24,3 +24,5 @@ Se deberá poder solicitar, desde el cliente al servidor, las mismas funciones i
 **Instrucciones de ejecución:** para ejecutar el programa debemos hacer uso de dos terminales. En una de ellas, debemos tener en ejecución el servidor por lo que ejecutamos `node dist/server/server.js`. En la otra terminal, para hacer uso de las funcionalidades del cliente, hay que ejecutar `node dist/client/client.js comando --parámetros`, donde en "comando" hay que indicar el comando que se quiere solicitar al servidor y en "--parámetros", los parámatros correspondientes dependiendo de cada funcionalidad. Como por ejemplo: `node dist/client/client.js add --user="Usuario" --title="Red note" --body="This is a red note" --color="blue"`.
 
 Por último, se tendrá que comentar en un informe la solución diseñada explicando las decisiones de diseño que se han tomado.
+
+Para ver el informe, haz clic [aquí](https://ull-esit-inf-dsi-2021.github.io/ull-esit-inf-dsi-20-21-prct10-async-sockets-alu0101228020/).
