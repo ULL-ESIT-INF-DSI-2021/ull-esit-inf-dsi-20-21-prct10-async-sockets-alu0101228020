@@ -3,7 +3,7 @@ import {ResponseType} from '../types';
 import * as chalk from 'chalk';
 import {Notes} from '../notes/notes';
 import {Database} from '../notes/database';
-import {MessageEventEmitterServer} from './MessageEventEmitterServer';
+import {MessageEventEmitterServer} from './messageEventEmitterServer';
 
 /**
  * Every time a client connects to the server, that handler runs

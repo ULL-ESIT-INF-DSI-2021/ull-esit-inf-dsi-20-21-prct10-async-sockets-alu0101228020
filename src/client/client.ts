@@ -3,7 +3,7 @@ import {RequestType} from '../types';
 import * as yargs from 'yargs';
 import * as chalk from 'chalk';
 import {colours} from '../notes/notes';
-import {MessageEventEmitterClient} from './MessageEventEmitterClient';
+import {MessageEventEmitterClient} from './messageEventEmitterClient';
 
 /**
  * Port connected by the client, which matches the port listened to by the server
