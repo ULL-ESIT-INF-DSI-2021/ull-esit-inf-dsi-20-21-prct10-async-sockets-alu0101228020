@@ -34,7 +34,7 @@ A parte de la realización del código fuente, también deberemos comentar todo 
 
 Ahora bien, llevaremos a cabo el ejercicio propuesto a continuación, con sus correspondientes explicaciones.
 
-#### 4.1 Ejercicio - Descripción de los requisitos de la aplicación de procesamiento de notas de texto
+### 4.1 Ejercicio - Descripción de los requisitos de la aplicación de procesamiento de notas de texto
 
 Los requisitos que debe cumplir la aplicación de procesamiento de notas de texto son los enumerados a continuación:
 
